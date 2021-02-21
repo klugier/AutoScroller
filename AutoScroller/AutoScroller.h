@@ -1,64 +1,39 @@
-#ifndef _AutoScroller_AutoScroller_hpp_
-#define _AutoScroller_AutoScroller_hpp_
+#ifndef _AutoScroller_AutoScroller_h_
+#define _AutoScroller_AutoScroller_h_
 
-#include "AutoScrollerParentCtrl.h"
-
-constexpr int LINE_WIDTH  = 12;
-constexpr int LINE_HEIGHT = 12;
+#include <CtrlLib/CtrlLib.h>
 
 namespace Upp
 {
-	template<class C>
-	AutoScroller<C>::AutoScroller()
+	class AutoScroller : public ParentCtrl
 	{
-		C::AddFrame(scroll);
-		scroll.AutoHide();
-		scroll.WhenScroll = [=] { OnScroll(); };
-		scroll.SetLine(DPI(LINE_WIDTH, LINE_HEIGHT));
-	}
+	public:
+		AutoScroller();
+		
+	public:
+		void Layout() override;
+		void MouseWheel(Point, int zdelta, dword) override;
+		
+	public:
+		void EnableScroll(bool b = true);
+		void DisableScroll()         { EnableScroll(false); }
+		bool IsScrollEnabled() const { return scroll.x.IsEnabled() || scroll.y.IsEnabled(); }
 	
-	template<class C>
-	void AutoScroller<C>::Scroll(const Point& p)
-	{
-		if (!HasPane()) {
-			return;
-		}
-		Rect _r = pane->GetRect();
-		Rect r(-p, _r.GetSize());
-		pane->SetRect(r);
-		WhenScrolled();
-	}
+		void AddPane(Ctrl& c)        { ClearPane(); pane = &c; Add(c); }
+		Ctrl* GetPane() const        { return pane; }
+		bool HasPane() const         { return (~pane != nullptr); }
+		void ClearPane()             { if(! ~pane) return; pane->Remove(); pane = nullptr; }
 	
-	template<class C>
-	void AutoScroller<C>::OnScroll()
-	{
-		Scroll(scroll.Get());
-	}
+		void Scroll(const Point& p);
+		void OnScroll();
 	
-	template<class C>
-	void AutoScroller<C>::Layout()
-	{
-		Size psz = C::GetSize();
-		scroll.SetPage(psz);
-		if (!HasPane()) {
-			return;
-		}
-		Size tsz = pane->GetSize();
-		scroll.SetTotal(tsz);
-	}
+	public:
+		Event<> WhenScrolled;
+		ScrollBars scroll;
 	
-	template<class C>
-	void AutoScroller<C>::MouseWheel(Point, int zdelta, dword)
-	{
-		scroll.WheelY(zdelta);
-	}
-	
-	template<class C>
-	void AutoScroller<C>::EnableScroll(bool b)
-	{
-		scroll.x.Enable(b);
-		scroll.y.Enable(b);
-	}
+	protected:
+		Ptr<Ctrl> pane;
+	};
 }
 
 #endif

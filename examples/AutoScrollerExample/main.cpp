@@ -12,8 +12,8 @@ public:
 	void Toggle();
 
 public:
-	Upp::AutoScroller<Upp::ParentCtrl>        scroller;
-	Upp::WithContainerLayout<Upp::ParentCtrl> scroller_view;
+	Upp::AutoScroller                            scroller;
+	Upp::WithScrollerViewLayout<Upp::ParentCtrl> scroller_view;
 };
 
 void MyAppWindow::Toggle()

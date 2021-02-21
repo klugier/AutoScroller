@@ -6,8 +6,7 @@ uses
 file
 	AutoScroller.h,
 	AutoScroller.cpp,
-	Specialisations readonly separator,
-	AutoScrollerParentCtrl.h,
+	AutoScroller.usc,
 	Info readonly separator,
 	Copying;
 

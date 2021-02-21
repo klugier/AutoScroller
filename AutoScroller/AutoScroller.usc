@@ -1,0 +1,17 @@
+ctrl AutoScroller {
+	group "Special";
+
+	GetMinSize() { return Size(0, 0); }
+	GetStdSize() { return Size(64, 24); }
+
+	Frame  SetFrame @3;
+
+	Paint(w) {
+		r = GetRect();
+		DrawCtrlFrame(w, r, .SetFrame);
+		DrawBorder(w, r, :SGray, :SGray);
+
+		DrawClassName(w, r, "AutoScroller");
+	}
+	Sample() {}
+};

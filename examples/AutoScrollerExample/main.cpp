@@ -1,19 +1,17 @@
 #include <CtrlLib/CtrlLib.h>
 #include <AutoScroller/AutoScroller.h>
 
-namespace Upp {
-	#define LAYOUTFILE <examples/AutoScrollerExample/Layouts.lay>
-	#include <CtrlCore/lay.h>
-}
+#define LAYOUTFILE <examples/AutoScrollerExample/Layouts.lay>
+#include <CtrlCore/lay.h>
 
-class MyAppWindow : public Upp::WithAppLayout<Upp::TopWindow> {
+class MyAppWindow : public WithAppLayout<Upp::TopWindow> {
 public:
 	MyAppWindow();
 	void Toggle();
 
 public:
-	Upp::AutoScroller                            scroller;
-	Upp::WithScrollerViewLayout<Upp::ParentCtrl> scroller_view;
+	Upp::AutoScroller                       scroller;
+	WithScrollerViewLayout<Upp::ParentCtrl> scroller_view;
 };
 
 void MyAppWindow::Toggle()

@@ -7,6 +7,6 @@ LAYOUT(ScrollerViewLayout, 640, 440)
 	ITEM(Upp::DocEdit, doc3, RightPosZ(16, 176).TopPosZ(16, 92))
 	ITEM(Upp::DocEdit, doc2, RightPosZ(12, 176).BottomPosZ(12, 92))
 	ITEM(Upp::ProgressIndicator, dv___4, LeftPosZ(112, 440).TopPosZ(156, 24))
-	ITEM(Upp::Button, toggle_button, SetLabel(t_("Toggle")).LeftPosZ(84, 56).TopPosZ(40, 15))
+	ITEM(Upp::Button, toggle_button, SetLabel(Upp::t_("Toggle")).LeftPosZ(84, 56).TopPosZ(40, 15))
 END_LAYOUT
 

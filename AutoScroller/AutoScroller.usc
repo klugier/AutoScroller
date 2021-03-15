@@ -2,7 +2,7 @@ ctrl AutoScroller {
 	group "Special";
 
 	GetMinSize() { return Size(0, 0); }
-	GetStdSize() { return Size(128, 128); }
+	GetStdSize() { return Size(128, 64); }
 
 	Frame SetFrame @3;
 

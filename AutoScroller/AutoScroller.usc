@@ -2,16 +2,35 @@ ctrl AutoScroller {
 	group "Special";
 
 	GetMinSize() { return Size(0, 0); }
-	GetStdSize() { return Size(64, 24); }
+	GetStdSize() { return Size(128, 128); }
 
-	Frame  SetFrame @3;
+	Frame SetFrame @3;
 
 	Paint(w) {
 		r = GetRect();
+		sbWidth = 16;
+		
+		sr = r;
+		sr.right = sr.right-sbWidth;
+		sr.bottom = sr.bottom-sbWidth;
+		
+		vsb = sr;
+		vsb.left = sr.right;
+		vsb.right = r.right;
+		
+		hsb = sr;
+		hsb.top = sr.bottom;
+		hsb.bottom = r.bottom;
+		
+		PaintHScrollBar(w, hsb);
+		PaintVScrollBar(w, vsb);
+		
 		DrawCtrlFrame(w, r, .SetFrame);
 		DrawBorder(w, r, :SGray, :SGray);
-
-		DrawClassName(w, r, "AutoScroller");
+		
+		sr.right = sr.right - sbWidth;
+		DrawClassName(w, sr, "AutoScroller");
 	}
+	
 	Sample() {}
 };

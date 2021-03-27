@@ -19,10 +19,12 @@ namespace Upp
 		void DisableScroll()         { EnableScroll(false); }
 		bool IsScrollEnabled() const { return scroll.x.IsEnabled() || scroll.y.IsEnabled(); }
 	
-		void AddPane(Ctrl& c)        { ClearPane(); pane = &c; Add(c); }
+		void AddPane(Ctrl& c, Size sz) { ClearPane(); pane = &c; Add(c); scroll.SetTotal(sz); }
+		void AddPane(Ctrl& c)          { AddPane(c, c.GetSize()); }
+		
 		Ctrl* GetPane() const        { return pane; }
-		bool HasPane() const         { return (~pane != nullptr); }
-		void ClearPane()             { if(! ~pane) return; pane->Remove(); pane = nullptr; }
+		bool HasPane() const         { return pane; }
+		void ClearPane()             { if(pane) { pane->Remove(); pane = nullptr; } }
 	
 		void Scroll(const Point& p);
 		void OnScroll();

@@ -18,13 +18,12 @@ AutoScroller::AutoScroller()
 
 void AutoScroller::Scroll(const Point& p)
 {
-	if (!HasPane()) {
-		return;
+	if (HasPane()) {
+		Rect _r = pane->GetRect();
+		Rect r(-p, _r.GetSize());
+		pane->SetRect(r);
+		WhenScrolled();
 	}
-	Rect _r = pane->GetRect();
-	Rect r(-p, _r.GetSize());
-	pane->SetRect(r);
-	WhenScrolled();
 }
 
 void AutoScroller::OnScroll()
@@ -34,13 +33,8 @@ void AutoScroller::OnScroll()
 
 void AutoScroller::Layout()
 {
-	Size psz = GetSize();
+	Size psz = scroll.GetReducedViewSize();
 	scroll.SetPage(psz);
-	if (!HasPane()) {
-		return;
-	}
-	Size tsz = pane->GetSize();
-	scroll.SetTotal(tsz);
 }
 
 void AutoScroller::MouseWheel(Point, int zdelta, dword)

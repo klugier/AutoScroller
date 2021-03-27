@@ -16,14 +16,51 @@ AutoScroller::AutoScroller()
 	scroll.SetLine(DPI(LINE_WIDTH, LINE_HEIGHT));
 }
 
+void AutoScroller::MouseWheel(Point, int zdelta, dword)
+{
+	scroll.WheelY(zdelta);
+}
+
+void AutoScroller::EnableScroll(bool b)
+{
+	scroll.x.Enable(b);
+	scroll.y.Enable(b);
+}
+
+void AutoScroller::AddPane(Ctrl& c, Size sz)
+{
+	ClearPane();
+	pane = &c;
+	Add(c);
+	scroll.SetTotal(sz);
+}
+
+void AutoScroller::AddPane(Ctrl& c)
+{
+	AddPane(c, c.GetSize());
+}
+
+void AutoScroller::ClearPane()
+{
+	if (!HasPane()) {
+		return;
+	}
+	
+	pane->Remove();
+	pane = nullptr;
+}
+
 void AutoScroller::Scroll(const Point& p)
 {
-	if (HasPane()) {
-		Rect _r = pane->GetRect();
-		Rect r(-p, _r.GetSize());
-		pane->SetRect(r);
-		WhenScrolled();
+	if (!HasPane()) {
+		return;
 	}
+	
+	Rect _r = pane->GetRect();
+	Rect r(-p, _r.GetSize());
+	pane->SetRect(r);
+	
+	WhenScrolled();
 }
 
 void AutoScroller::OnScroll()
@@ -35,17 +72,6 @@ void AutoScroller::Layout()
 {
 	Size psz = scroll.GetReducedViewSize();
 	scroll.SetPage(psz);
-}
-
-void AutoScroller::MouseWheel(Point, int zdelta, dword)
-{
-	scroll.WheelY(zdelta);
-}
-
-void AutoScroller::EnableScroll(bool b)
-{
-	scroll.x.Enable(b);
-	scroll.y.Enable(b);
 }
 
 #endif

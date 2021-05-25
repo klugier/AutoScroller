@@ -9,5 +9,5 @@ file
 	Layouts.lay;
 
 mainconfig
-	"" = "GUI MT";
+	"" = "GUI";
 

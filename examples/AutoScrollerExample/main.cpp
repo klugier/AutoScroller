@@ -23,8 +23,7 @@ MyAppWindow::MyAppWindow()
 {
 	CtrlLayout(*this, "AutoScroller Example");
 	Sizeable().Zoomable();
-	auto sz = GetSize();
-
+	
 	scroller.EnableScroll();
 	Add(scroller.SizePos());
 
